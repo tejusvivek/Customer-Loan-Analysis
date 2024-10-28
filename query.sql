@@ -43,13 +43,8 @@ GROUP BY customers.first_name, customers.customer_id, customers.last_name
 ORDER BY customers.customer_id
 
 --Calculate the average loan amount for each loan term:
-SELECT c.customer_id,c.first_name,c.last_name, l.loan_id, l.loan_amount, l.loan_term , (l.loan_amount/l.loan_term) as [avg_loan_amount_per__term] FROM customers as c
-JOIN loans as l
-ON c.customer_id = l.customer_id
-JOIN loan_payments as lp
-ON l.loan_id = lp.loan_id
-ORDER by c.customer_id
-
+SELECT avg(loan_amount) as [avg loan amount], loan_term from loans
+group by loan_term
 
 --Find the total loan amount and interest across all loans:
 SELECT (sum(loan_amount)) as [total_loan_amount], sum(((loan_amount*interest_rate*(loan_term/12))/100)) as [total_interest_amount] FROM loans
